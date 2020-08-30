@@ -3,8 +3,8 @@
 namespace Meilisearch\Scout\Console;
 
 use Illuminate\Console\Command;
-use MeiliSearch\Client;
 use MeiliSearch\Exceptions\HTTPRequestException;
+use Meilisearch\Scout\MeilisearchClient;
 
 class IndexMeilisearch extends Command
 {
@@ -31,7 +31,7 @@ class IndexMeilisearch extends Command
      */
     public function handle()
     {
-        $client = new Client(config('meilisearch.host'), config('meilisearch.key'));
+        $client = (new MeilisearchClient())->getClient();
 
         try {
             if ($this->option('delete')) {

@@ -4,7 +4,6 @@ namespace Meilisearch\Scout;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Scout\EngineManager;
-use MeiliSearch\Client;
 use Meilisearch\Scout\Console\IndexMeilisearch;
 use Meilisearch\Scout\Engines\MeilisearchEngine;
 
@@ -37,7 +36,7 @@ class MeilisearchServiceProvider extends ServiceProvider
 
         resolve(EngineManager::class)->extend('meilisearch', function () {
             return new MeilisearchEngine(
-                new Client(config('meilisearch.host'), config('meilisearch.key')),
+                (new MeilisearchClient())->getClient(),
                 config('scout.soft_delete', false)
             );
         });
